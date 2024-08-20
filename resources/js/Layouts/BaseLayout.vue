@@ -4,7 +4,7 @@
             <header>
                 <nav class="navbar navbar-expand-md bg-body-tertiary">
                     <div class="container">
-                        <a :href="route('main')" class="navbar-brand">Leads</a>
+                        <a :href="route('leads.create')" class="navbar-brand">Leads</a>
 
                         <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>

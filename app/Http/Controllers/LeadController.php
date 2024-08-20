@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Repositories\Interfaces\LeadRepositoryInterface;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Inertia\Inertia;
+
+class LeadController extends Controller
+{
+    public function __construct(
+        private LeadRepositoryInterface $leadRepositoryInterface,
+    ) {}
+
+    public function create()
+    {
+        return Inertia::render('Lead/Create', [
+            'title' => 'Main page - ' . config('app.name'),
+            'success' => session('success') ?? null,
+            'errors' => session('errors') ?? null,
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => ['string', 'required', 'max:255'],
+            'surname' => ['string', 'required', 'max:255'],
+            'phone' => ['string', 'required', 'unique:leads,phone', 'min:7', 'max:255'],
+            'email' => ['string', 'required', 'email:rfc,dns', 'unique:leads,email', 'max:255'],
+            'text' => ['string', 'required', 'max:255'],
+        ]);
+
+        if ($validator->fails()) {
+            return back()->with('errors', $validator->errors());
+        }
+
+        $this->leadRepositoryInterface->store($request);
+
+        return back()->with('success', 'Lead created successfully.');
+    }
+}
