@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Lead;
 use App\Repositories\Interfaces\LeadRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;

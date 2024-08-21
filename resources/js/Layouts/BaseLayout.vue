@@ -13,10 +13,10 @@
                         <div class="collapse navbar-collapse" id="navbar-collapse">
                             <ul v-show="!$page.props.user" class="navbar-nav ms-auto mb-2 mb-md-0">
                                 <li class="nav-item">
-                                    <a :href="route('login.create')" class="nav-link" aria-current="page">Авторизация</a>
+                                    <a :href="route('login')" class="nav-link" aria-current="page">Авторизация</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="" class="nav-link" aria-current="page">Регистрация</a>
+                                    <a :href="route('register.create')" class="nav-link" aria-current="page">Регистрация</a>
                                 </li>
                             </ul>
                             <ul v-show="$page.props.user" class="navbar-nav ms-auto mb-2 mb-md-0">

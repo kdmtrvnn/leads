@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\LeadController;
 use Illuminate\Support\Facades\Route;
 
@@ -8,8 +10,19 @@ Route::get('/', function () {
     return redirect()->route('leads.create');
 });
 
+Route::controller(RegisterController::class)->group(function () {
+    Route::get('/register', 'create')->name('register.create');
+    Route::post('/register', 'store')->name('register.store');
+});
+
+Route::middleware('auth')->controller(VerifyEmailController::class)->group(function () {
+    Route::get('verify-email/{id}/{verify_token}', 'verify')->middleware(['throttle:6,1'])->name('email.verify');
+    Route::get('verify-email/success', 'verifySuccess')->name('email.verify_success');
+    Route::get('verify-email/error', 'verifyError')->name('email.verify_error');
+});
+
 Route::controller(LoginController::class)->group(function () {
-    Route::get('/login', 'create')->name('login.create');
+    Route::get('/login', 'create')->name('login');
     Route::post('/login', 'store')->name('login.store');
     Route::get('/logout', 'logout')->name('logout');
 });

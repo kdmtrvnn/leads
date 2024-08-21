@@ -17,6 +17,7 @@ class LoginController extends Controller
     public function create()
     {
         return Inertia::render('Auth/Login', [
+            'title' => 'Login page - ' . config('app.name'),
             'errors' => session('errors') ?? null,
         ]);
     }
@@ -52,7 +53,7 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('login.create');
+        return redirect()->route('login');
     }
 
     public function throttleKey(Request $request): string
