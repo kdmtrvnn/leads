@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\LeadController;
@@ -13,6 +14,11 @@ Route::get('/', function () {
 Route::controller(RegisterController::class)->group(function () {
     Route::get('/register', 'create')->name('register.create');
     Route::post('/register', 'store')->name('register.store');
+});
+
+Route::controller(PasswordResetLinkController::class)->group(function () {
+    Route::get('/reset-password', 'create')->name('reset_password.create');
+    Route::post('/reset-password', 'store')->name('reset_password.store');
 });
 
 Route::middleware('auth')->controller(VerifyEmailController::class)->group(function () {

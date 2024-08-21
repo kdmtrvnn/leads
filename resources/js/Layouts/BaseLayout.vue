@@ -24,6 +24,9 @@
                                     <a :href="route('leads.index')" class="nav-link" aria-current="page">Лиды</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a :href="route('reset_password.create')" class="nav-link" aria-current="page">Сбросить пароль</a>
+                                </li>
+                                <li class="nav-item">
                                     <a :href="route('logout')" class="nav-link" aria-current="page">Выход</a>
                                 </li>
                             </ul>
@@ -50,3 +53,5 @@
         </div>
     </body>
 </template>
+<script setup lang="ts">
+</script>
