@@ -21,7 +21,7 @@
                             </ul>
                             <ul v-show="$page.props.user" class="navbar-nav ms-auto mb-2 mb-md-0">
                                 <li class="nav-item">
-                                    <a href="" class="nav-link" aria-current="page">Лиды</a>
+                                    <a :href="route('leads.index')" class="nav-link" aria-current="page">Лиды</a>
                                 </li>
                                 <li class="nav-item">
                                     <a :href="route('logout')" class="nav-link" aria-current="page">Выход</a>

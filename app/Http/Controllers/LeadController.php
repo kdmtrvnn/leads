@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lead;
 use App\Repositories\Interfaces\LeadRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -13,7 +14,31 @@ class LeadController extends Controller
         private LeadRepositoryInterface $leadRepositoryInterface,
     ) {}
 
-    public function create()
+    public function index(): \Inertia\Response
+    {
+        return Inertia::render('Lead/Index', [
+            'title' => 'Leads page - ' . config('app.name'),
+        ]);
+    }
+
+    public function get()
+    {
+        $leads = $this->leadRepositoryInterface->get();
+        $countAllLeads = $this->leadRepositoryInterface->countAllLeads();
+        $countLeadsInStatusNew = $this->leadRepositoryInterface->countLeadsInStatusNew();
+        $countLeadsInStatusAtWork = $this->leadRepositoryInterface->countLeadsInStatusAtWork();
+        $countLeadsInStatusCompleted = $this->leadRepositoryInterface->countLeadsInStatusCompleted();
+
+        return (object)[
+            'leads' => $leads,
+            'countAllLeads' => $countAllLeads,
+            'countLeadsInStatusNew' => $countLeadsInStatusNew,
+            'countLeadsInStatusAtWork' => $countLeadsInStatusAtWork,
+            'countLeadsInStatusCompleted' => $countLeadsInStatusCompleted,
+        ];
+    }
+
+    public function create(): \Inertia\Response
     {
         return Inertia::render('Lead/Create', [
             'title' => 'Main page - ' . config('app.name'),
@@ -39,5 +64,20 @@ class LeadController extends Controller
         $this->leadRepositoryInterface->store($request);
 
         return back()->with('success', 'Lead created successfully.');
+    }
+
+    public function delete(int $id)
+    {
+        $this->leadRepositoryInterface->delete($id);
+    }
+
+    public function updateStatus(Request $request, int $id)
+    {
+        $this->leadRepositoryInterface->updateStatus($id, $request->status);
+    }
+
+    public function update(Request $request, int $id)
+    {
+        $this->leadRepositoryInterface->update($id, $request);
     }
 }

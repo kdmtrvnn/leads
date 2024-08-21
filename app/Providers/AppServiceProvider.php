@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Status;
 use App\Repositories\Interfaces\LeadRepositoryInterface;
 use App\Repositories\LeadRepository;
 use Illuminate\Http\Request;
@@ -27,5 +28,6 @@ class AppServiceProvider extends ServiceProvider
             ? $request->user()->only('id', 'name', 'email')
             : null
         );
+        Inertia::share('statuses', Status::get());
     }
 }
