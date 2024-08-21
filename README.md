@@ -27,9 +27,8 @@ Routes      http://127.0.0.1:8000
 1.1. GET /leads/create
 1.2. POST /leads
 1.3. GET /leads
-1.4. GET /leads
-1.5. GET /leads/get
-1.6. DELETE /leads/{id}
-1.7. PATCH /leads/{id}
-1.8. PUT /leads/{id}
+1.4. GET /leads/get
+1.5. DELETE /leads/{id}
+1.6. PATCH /leads/{id}
+1.7. POST /leads/{id}
 ```
