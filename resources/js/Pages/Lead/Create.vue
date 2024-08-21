@@ -67,7 +67,7 @@ export default {
                 </div>
                 <div class="card-body">
                     <form @submit.prevent="createLead()">
-                        <div>
+                        <div class="mb-3">
                             <InputLabel for="name" value="Name" />
 
                             <TextInput
@@ -82,7 +82,7 @@ export default {
                             <InputError class="mt-2" :message="this.form.errors.name" />
                         </div>
 
-                        <div class="mt-4">
+                        <div class="mb-3">
                             <InputLabel for="surname" value="Surname" />
 
                             <TextInput
@@ -97,7 +97,7 @@ export default {
                             <InputError class="mt-2" :message="this.form.errors.surname" />
                         </div>
 
-                        <div class="mt-4">
+                        <div class="mb-3">
                             <InputLabel for="phone" value="Phone" />
 
                             <TextInput
@@ -112,7 +112,7 @@ export default {
                             <InputError class="mt-2" :message="this.form.errors.phone" />
                         </div>
 
-                        <div class="mt-4">
+                        <div class="mb-3">
                             <InputLabel for="email" value="Email" />
 
                             <TextInput
@@ -127,7 +127,7 @@ export default {
                             <InputError class="mt-2" :message="this.form.errors.email" />
                         </div>
 
-                        <div class="mt-4">
+                        <div class="mb-3">
                             <InputLabel for="text" value="Text" />
 
                             <TextInput
