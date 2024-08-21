@@ -31,6 +31,9 @@ class AppServiceProvider extends ServiceProvider
             ? $request->user()->only('id', 'name', 'email')
             : null
         );
-        Inertia::share('statuses', Status::get());
+
+        if (\App::environment('production')) {
+            Inertia::share('statuses', Status::get());
+        }
     }
 }

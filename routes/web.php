@@ -43,5 +43,5 @@ Route::controller(LeadController::class)->middleware('auth')->group(function() {
 
 Route::controller(LeadController::class)->group(function() {
     Route::get('/leads/create', 'create')->name('leads.create');
-    Route::post('/leads', 'store')->middleware('throttle:3,1')->name('leads.store');
+    Route::post('/leads', 'store')->middleware('throttle:5,1')->name('leads.store');
 });

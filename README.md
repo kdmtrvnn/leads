@@ -12,7 +12,7 @@ git clone URL
 Go to your project directory
 ```
 composer install
-cp .env.example .env
+cp .env.example .env    // Set APP_ENV=production
 php artisan key:generate
 php artisan migrate
 php artisan db:seed
@@ -22,7 +22,7 @@ npm i
 npm run dev
 ```
 
-Routes
+Routes      http://127.0.0.1:8000
 ```
 1.1. GET /leads/create
 1.2. POST /leads
