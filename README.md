@@ -11,8 +11,8 @@ git clone URL
 ```
 Go to your project directory
 ```
-composer install
 cp .env.example .env    // Set APP_ENV=production
+composer install
 php artisan key:generate
 php artisan migrate
 php artisan db:seed
