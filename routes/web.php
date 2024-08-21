@@ -16,7 +16,7 @@ Route::controller(RegisterController::class)->group(function () {
     Route::post('/register', 'store')->name('register.store');
 });
 
-Route::controller(PasswordResetLinkController::class)->group(function () {
+Route::middleware('auth')->controller(PasswordResetLinkController::class)->group(function () {
     Route::get('/reset-password', 'create')->name('reset_password.create');
     Route::post('/reset-password', 'store')->name('reset_password.store');
 });
@@ -30,7 +30,7 @@ Route::middleware('auth')->controller(VerifyEmailController::class)->group(funct
 Route::controller(LoginController::class)->group(function () {
     Route::get('/login', 'create')->name('login');
     Route::post('/login', 'store')->name('login.store');
-    Route::get('/logout', 'logout')->name('logout');
+    Route::get('/logout', 'logout')->name('logout')->middleware('auth');
 });
 
 Route::controller(LeadController::class)->group(function() {
