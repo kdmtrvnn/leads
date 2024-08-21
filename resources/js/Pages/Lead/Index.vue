@@ -74,10 +74,10 @@ export default {
         <Head :title="title" />
 
         <div>
-            <p>Всего лидов: {{ this.countAllLeads }}</p>
-            <p>В статусе «Новый»: {{ this.countLeadsInStatusNew }}</p>
-            <p>В статусе «В работе»: {{ this.countLeadsInStatusAtWork }}</p>
-            <p>В статусе «Завершен»: {{ this.countLeadsInStatusCompleted }}</p>
+            <p>Всего лидов: <b>{{ this.countAllLeads }}</b></p>
+            <p>Статус «Новый»: <b>{{ this.countLeadsInStatusNew }}</b></p>
+            <p>Статус «В работе»: <b>{{ this.countLeadsInStatusAtWork }}</b></p>
+            <p>Статус «Завершен»: <b>{{ this.countLeadsInStatusCompleted }}</b></p>
             <div v-for="lead in this.leads" :key="lead.id">
                 <div class="container-fluid">
                     <div class="row">
