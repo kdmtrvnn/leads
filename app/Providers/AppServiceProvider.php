@@ -2,10 +2,11 @@
 
 namespace App\Providers;
 
-use App\Models\Status;
 use App\Repositories\Interfaces\LeadRepositoryInterface;
+use App\Repositories\Interfaces\StatusRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\LeadRepository;
+use App\Repositories\StatusRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
@@ -20,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(LeadRepositoryInterface::class, LeadRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(StatusRepositoryInterface::class, StatusRepository::class);
     }
 
     /**
@@ -31,9 +33,5 @@ class AppServiceProvider extends ServiceProvider
             ? $request->user()->only('id', 'name', 'email')
             : null
         );
-
-        if (\App::environment('production')) {
-            Inertia::share('statuses', Status::get());
-        }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\Interfaces\LeadRepositoryInterface;
+use App\Repositories\Interfaces\StatusRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
@@ -11,6 +12,7 @@ class LeadController extends Controller
 {
     public function __construct(
         private LeadRepositoryInterface $leadRepositoryInterface,
+        private StatusRepositoryInterface $statusRepositoryInterface,
     ) {}
 
     public function index(): \Inertia\Response
@@ -29,6 +31,7 @@ class LeadController extends Controller
         $countLeadsInStatusNew = $this->leadRepositoryInterface->countLeadsInStatusNew();
         $countLeadsInStatusAtWork = $this->leadRepositoryInterface->countLeadsInStatusAtWork();
         $countLeadsInStatusCompleted = $this->leadRepositoryInterface->countLeadsInStatusCompleted();
+        $statuses = $this->statusRepositoryInterface->get();
 
         return (object)[
             'leads' => $leads,
@@ -36,6 +39,7 @@ class LeadController extends Controller
             'countLeadsInStatusNew' => $countLeadsInStatusNew,
             'countLeadsInStatusAtWork' => $countLeadsInStatusAtWork,
             'countLeadsInStatusCompleted' => $countLeadsInStatusCompleted,
+            'statuses' => $statuses,
         ];
     }
 

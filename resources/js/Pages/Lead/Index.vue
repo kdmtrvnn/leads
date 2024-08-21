@@ -28,6 +28,7 @@ export default {
         countLeadsInStatusAtWork: '',
         countLeadsInStatusCompleted: '',
         status: '',
+        statuses: '',
         isDisabled: true,
         form: useForm({
             name: '',
@@ -47,6 +48,7 @@ export default {
             this.countLeadsInStatusNew = response.data.countLeadsInStatusNew;
             this.countLeadsInStatusAtWork = response.data.countLeadsInStatusAtWork;
             this.countLeadsInStatusCompleted = response.data.countLeadsInStatusCompleted;
+            this.statuses = response.data.statuses;
         },
 
         async deleteLead(id) {
@@ -168,7 +170,7 @@ export default {
                                     <div class="mb-3">
                                         <InputLabel for="status" value="Status" />
                                         <select :key="lead.id" class="form-control" v-model="status" @change="updateStatus(lead.id)">
-                                            <option v-for="statusItem in $page.props.statuses" :key="statusItem.id" :value="statusItem.id">
+                                            <option v-for="statusItem in statuses" :key="statusItem.id" :value="statusItem.id">
                                                 {{statusItem.name}}
                                             </option>
                                         </select>
