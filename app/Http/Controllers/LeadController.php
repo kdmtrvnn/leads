@@ -17,6 +17,8 @@ class LeadController extends Controller
     {
         return Inertia::render('Lead/Index', [
             'title' => 'Leads page - ' . config('app.name'),
+            'success' => session('success') ?? null,
+            'errors' => session('errors') ?? null,
         ]);
     }
 
@@ -51,7 +53,7 @@ class LeadController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => ['string', 'required', 'max:255'],
             'surname' => ['string', 'required', 'max:255'],
-            'phone' => ['string', 'required', 'unique:leads,phone', 'min:7', 'max:255'],
+            'phone' => ['string', 'required', 'unique:leads,phone', 'min:7', 'max:15'],
             'email' => ['string', 'required', 'email:rfc,dns', 'unique:leads,email', 'max:255'],
             'text' => ['string', 'required', 'max:255'],
         ]);
@@ -77,6 +79,19 @@ class LeadController extends Controller
 
     public function update(Request $request, int $id)
     {
+        $validator = Validator::make($request->all()['lead'], [
+            'name' => ['string', 'required', 'max:255'],
+            'surname' => ['string', 'required', 'max:255'],
+            'phone' => ['string', 'required', 'min:7', 'max:16'],
+            'email' => ['string', 'required', 'email:rfc,dns', 'max:255'],
+        ]);
+
+        if ($validator->fails()) {
+            return back()->with('errors', $validator->errors());
+        }
+
         $this->leadRepositoryInterface->update($id, $request);
+
+        return back()->with('success', 'Lead updated successfully.');
     }
 }

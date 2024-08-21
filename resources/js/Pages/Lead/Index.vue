@@ -5,10 +5,12 @@ import InputError from "../../Components/InputError.vue";
 import InputLabel from "../../Components/InputLabel.vue";
 import TextInput from "../../Components/TextInput.vue";
 import PrimaryButton from "../../Components/PrimaryButton.vue";
-import {useForm} from "@inertiajs/inertia-vue3";
+import {Head, useForm} from "@inertiajs/inertia-vue3";
 
 export default {
     components: {
+        Head,
+        useForm,
         PrimaryButton,
         TextInput, InputLabel, InputError,
         BaseLayout,
@@ -16,6 +18,8 @@ export default {
     },
     props: {
         title: String,
+        success: String || null,
+        errors: Object || null,
     },
     data: () => ({
         leads: [],
@@ -24,13 +28,12 @@ export default {
         countLeadsInStatusAtWork: '',
         countLeadsInStatusCompleted: '',
         status: '',
-        disableButton: true,
+        isDisabled: true,
         form: useForm({
             name: '',
             surname: '',
             phone: '',
             email: '',
-            text: '',
         }),
     }),
     mounted() {
@@ -52,7 +55,6 @@ export default {
         },
 
         async updateStatus(leadId) {
-            console.log(this.statusId)
             await axios.patch(route('leads.update_status', leadId), {status: this.status});
             this.getLeads();
         },
@@ -60,7 +62,7 @@ export default {
         async update(id) {
             const item = this.leads.filter(lead => {return (lead.id === id)});
             const leadForUpdate = JSON.parse(JSON.stringify(item))[0];
-            await axios.put(route('leads.update', id), {lead: leadForUpdate});
+            await axios.post(route('leads.update', id), {lead: leadForUpdate});
             this.getLeads();
         },
     },
@@ -72,6 +74,10 @@ export default {
     <BaseLayout>
 
         <Head :title="title" />
+
+        <div v-show="!errors && success" class="alert alert-success">
+            {{ success }}
+        </div>
 
         <div>
             <p>Всего лидов: <b>{{ this.countAllLeads }}</b></p>
@@ -97,8 +103,10 @@ export default {
                                             v-model="lead.name"
                                             required
                                             autocomplete="name"
-                                            @change="disableButton = false"
+                                            @change="isDisabled = false"
                                         />
+
+                                        <InputError class="mt-2" :message="this.form.errors.name" />
                                     </div>
                                     <div class="mb-1">
                                         <InputLabel for="surname" value="Surname" />
@@ -110,8 +118,10 @@ export default {
                                             v-model="lead.surname"
                                             required
                                             autocomplete="surname"
-                                            @change="disableButton = false"
+                                            @change="isDisabled = false"
                                         />
+
+                                        <InputError class="mt-2" :message="this.form.errors.surname" />
                                     </div>
                                     <div class="mb-1">
                                         <InputLabel for="email" value="Email" />
@@ -123,8 +133,10 @@ export default {
                                             v-model="lead.email"
                                             required
                                             autocomplete="email"
-                                            @change="disableButton = false"
+                                            @change="isDisabled = false"
                                         />
+
+                                        <InputError class="mt-2" :message="this.form.errors.email" />
                                     </div>
                                     <div class="mb-1">
                                         <InputLabel for="phone" value="Phone" />
@@ -136,8 +148,10 @@ export default {
                                             v-model="lead.phone"
                                             required
                                             autocomplete="phone"
-                                            @change="disableButton = false"
+                                            @change="isDisabled = false"
                                         />
+
+                                        <InputError class="mt-2" :message="this.form.errors.phone" />
                                     </div>
                                     <div class="mb-1">
                                         <InputLabel for="created_at" value="Created at" />
@@ -153,15 +167,15 @@ export default {
                                     </div>
                                     <div class="mb-3">
                                         <InputLabel for="status" value="Status" />
-                                        <select id="status" class="form-control" v-model="status" @change="updateStatus(lead.id)">
-                                            <option v-for="statusItem in $page.props.statuses" :key="statusItem.id" :value="statusItem.id" :selected="statusItem.id">
+                                        <select :key="lead.id" class="form-control" v-model="status" @change="updateStatus(lead.id)">
+                                            <option v-for="statusItem in $page.props.statuses" :key="statusItem.id" :value="statusItem.id">
                                                 {{statusItem.name}}
                                             </option>
                                         </select>
                                     </div>
                                     <div class="d-flex">
                                         <div>
-                                            <PrimaryButton :disabled="disableButton" :key="lead.id" :class="{ 'opacity-25': form.processing }">
+                                            <PrimaryButton :disabled="isDisabled" :key="lead.id" :class="{ 'opacity-25': form.processing }">
                                                 Сохранить
                                             </PrimaryButton>
                                         </div>

@@ -65,7 +65,6 @@ class LeadRepository implements LeadRepositoryInterface
 
     public function updateStatus(int $id, string $status): void
     {
-        dd($status);
         Lead::where('id', $id)->update(['status_id' => $status]);
     }
 

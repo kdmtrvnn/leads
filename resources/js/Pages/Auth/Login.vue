@@ -32,9 +32,6 @@ export default {
                 onSuccess: () => {
                     form.reset();
                 },
-                onError: (errors) => {
-                    console.log(errors);
-                },
             });
         };
 
