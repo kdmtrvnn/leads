@@ -11,7 +11,12 @@ class LeadRepository implements LeadRepositoryInterface
 {
     public function get()
     {
-        return Lead::get();
+        $leads = Lead::get();
+        foreach ($leads as $lead) {
+            $lead->isDisabled = true;
+        }
+
+        return $leads;
     }
 
     public function countAllLeads(): int

@@ -28,7 +28,6 @@ export default {
         countLeadsInStatusAtWork: '',
         countLeadsInStatusCompleted: '',
         statuses: '',
-        isDisabled: true,
         form: useForm({
             name: '',
             surname: '',
@@ -112,7 +111,7 @@ export default {
                                             v-model="lead.name"
                                             required
                                             autocomplete="name"
-                                            @change="isDisabled = false"
+                                            @change="lead.isDisabled = false"
                                         />
 
                                         <InputError class="mt-2" :message="this.errors.name" />
@@ -127,7 +126,7 @@ export default {
                                             v-model="lead.surname"
                                             required
                                             autocomplete="surname"
-                                            @change="isDisabled = false"
+                                            @change="lead.isDisabled = false"
                                         />
 
                                         <InputError class="mt-2" :message="this.errors.surname" />
@@ -142,7 +141,7 @@ export default {
                                             v-model="lead.email"
                                             required
                                             autocomplete="email"
-                                            @change="isDisabled = false"
+                                            @change="lead.isDisabled = false"
                                         />
 
                                         <InputError class="mt-2" :message="this.errors.email" />
@@ -157,7 +156,7 @@ export default {
                                             v-model="lead.phone"
                                             required
                                             autocomplete="phone"
-                                            @change="isDisabled = false"
+                                            @change="lead.isDisabled = false"
                                         />
 
                                         <InputError class="mt-2" :message="this.errors.phone" />
@@ -184,7 +183,7 @@ export default {
                                     </div>
                                     <div class="d-flex">
                                         <div>
-                                            <PrimaryButton :disabled="isDisabled" :key="lead.id" :class="{ 'opacity-25': form.processing }">
+                                            <PrimaryButton :disabled="lead.isDisabled" :key="lead.id" :class="{ 'opacity-25': form.processing }">
                                                 Сохранить
                                             </PrimaryButton>
                                         </div>
