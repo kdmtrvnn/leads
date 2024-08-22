@@ -18,11 +18,11 @@ export default {
     },
     props: {
         title: String,
-        success: String || null,
-        errors: Object || null,
     },
     data: () => ({
         leads: [],
+        success: '',
+        errors: '',
         countAllLeads: '',
         countLeadsInStatusNew: '',
         countLeadsInStatusAtWork: '',
@@ -52,19 +52,27 @@ export default {
 
         async deleteLead(id) {
             await axios.delete(route('leads.delete', id));
-            this.getLeads();
+            await this.getLeads();
         },
 
         async updateStatus(leadId, status) {
             await axios.patch(route('leads.update_status', leadId), {status: status});
-            this.getLeads();
+            await this.getLeads();
         },
 
         async update(id) {
             const item = this.leads.filter(lead => {return (lead.id === id)});
             const leadForUpdate = JSON.parse(JSON.stringify(item))[0];
-            await axios.post(route('leads.update', id), {lead: leadForUpdate});
-            this.getLeads();
+            const resp = await axios.post(route('leads.update', id), {lead: leadForUpdate});
+            if (resp.data.success) {
+                this.success = resp.data.success;
+            }
+
+            if (resp.data.errors) {
+                this.errors = resp.data.errors;
+            }
+
+            await this.getLeads();
         },
     },
 };
@@ -74,10 +82,10 @@ export default {
 <template>
     <BaseLayout>
 
-        <Head :title="title" />
+        <Head :title="this.title" />
 
-        <div v-show="!errors && success" class="alert alert-success">
-            {{ success }}
+        <div v-show="!this.errors && this.success" class="alert alert-success">
+            {{ this.success }}
         </div>
 
         <div>
@@ -107,7 +115,7 @@ export default {
                                             @change="isDisabled = false"
                                         />
 
-                                        <InputError class="mt-2" :message="this.form.errors.name" />
+                                        <InputError class="mt-2" :message="this.errors.name" />
                                     </div>
                                     <div class="mb-1">
                                         <InputLabel for="surname" value="Surname" />
@@ -122,7 +130,7 @@ export default {
                                             @change="isDisabled = false"
                                         />
 
-                                        <InputError class="mt-2" :message="this.form.errors.surname" />
+                                        <InputError class="mt-2" :message="this.errors.surname" />
                                     </div>
                                     <div class="mb-1">
                                         <InputLabel for="email" value="Email" />
@@ -137,7 +145,7 @@ export default {
                                             @change="isDisabled = false"
                                         />
 
-                                        <InputError class="mt-2" :message="this.form.errors.email" />
+                                        <InputError class="mt-2" :message="this.errors.email" />
                                     </div>
                                     <div class="mb-1">
                                         <InputLabel for="phone" value="Phone" />
@@ -152,7 +160,7 @@ export default {
                                             @change="isDisabled = false"
                                         />
 
-                                        <InputError class="mt-2" :message="this.form.errors.phone" />
+                                        <InputError class="mt-2" :message="this.errors.phone" />
                                     </div>
                                     <div class="mb-1">
                                         <InputLabel for="created_at" value="Created at" />

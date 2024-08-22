@@ -19,8 +19,6 @@ class LeadController extends Controller
     {
         return Inertia::render('Lead/Index', [
             'title' => 'Leads page - ' . config('app.name'),
-            'success' => session('success') ?? null,
-            'errors' => session('errors') ?? null,
         ]);
     }
 
@@ -91,11 +89,11 @@ class LeadController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return back()->with('errors', $validator->errors());
+            return ['errors' =>  $validator->errors()];
         }
 
         $this->leadRepositoryInterface->update($id, $request);
 
-        return back()->with('success', 'Lead updated successfully.');
+        return ['success' => 'Lead updated successfully.'];
     }
 }
