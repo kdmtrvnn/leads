@@ -31,7 +31,7 @@ class LeadController extends Controller
         $countLeadsInStatusCompleted = $this->leadRepositoryInterface->countLeadsInStatusCompleted();
         $statuses = $this->statusRepositoryInterface->get();
 
-        return (object)[
+        return [
             'leads' => $leads,
             'countAllLeads' => $countAllLeads,
             'countLeadsInStatusNew' => $countLeadsInStatusNew,
