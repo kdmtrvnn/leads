@@ -27,7 +27,6 @@ export default {
         countLeadsInStatusNew: '',
         countLeadsInStatusAtWork: '',
         countLeadsInStatusCompleted: '',
-        status: '',
         statuses: '',
         isDisabled: true,
         form: useForm({
@@ -56,8 +55,8 @@ export default {
             this.getLeads();
         },
 
-        async updateStatus(leadId) {
-            await axios.patch(route('leads.update_status', leadId), {status: this.status});
+        async updateStatus(leadId, status) {
+            await axios.patch(route('leads.update_status', leadId), {status: status});
             this.getLeads();
         },
 
@@ -169,7 +168,7 @@ export default {
                                     </div>
                                     <div class="mb-3">
                                         <InputLabel for="status" value="Status" />
-                                        <select :key="lead.id" class="form-control" v-model="status" @change="updateStatus(lead.id)">
+                                        <select class="form-control" v-model="statuses[lead.status_id - 1].id" @change="updateStatus(lead.id, statuses[lead.status_id - 1].id)">
                                             <option v-for="statusItem in statuses" :key="statusItem.id" :value="statusItem.id">
                                                 {{statusItem.name}}
                                             </option>
