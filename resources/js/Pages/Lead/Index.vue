@@ -62,7 +62,7 @@ export default {
         async update(id) {
             const item = this.leads.filter(lead => {return (lead.id === id)});
             const leadForUpdate = JSON.parse(JSON.stringify(item))[0];
-            const resp = await axios.post(route('leads.update', id), {lead: leadForUpdate});
+            const resp = await axios.post(route('leads.update', id), {...leadForUpdate});
             if (resp.data.success) {
                 this.success = resp.data.success;
             }

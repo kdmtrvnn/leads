@@ -81,7 +81,7 @@ class LeadController extends Controller
 
     public function update(Request $request, int $id)
     {
-        $validator = Validator::make($request->all()['lead'], [
+        $validator = Validator::make($request->all(), [
             'name' => ['string', 'required', 'max:255'],
             'surname' => ['string', 'required', 'max:255'],
             'phone' => ['string', 'required', 'min:7', 'max:16'],

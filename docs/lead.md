@@ -52,3 +52,25 @@
     ]
 }
 ```
+
+### Create lead:
+- Method: POST
+- Route: http://127.0.0.1:8000/leads
+- Headers:
+```
+X-CSRF-TOKEN: plL58tpoWssOzdcCFgv8fZsqrJDAfXYsIST39FZU
+```
+- Request Body:
+```json
+{
+    "name": "Test",
+    "surname": "Test",
+    "phone": "12345678",
+    "email": "test@mail.ru",
+    "text": "test text"
+}
+```
+- Response Body Example:
+```
+200 OK
+```
