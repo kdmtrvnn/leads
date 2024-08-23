@@ -33,7 +33,7 @@ Route::controller(LoginController::class)->group(function () {
     Route::get('/logout', 'logout')->name('logout')->middleware('auth');
 });
 
-Route::controller(LeadController::class)->middleware('auth')->group(function() {
+Route::middleware('auth')->controller(LeadController::class)->group(function() {
     Route::post('/leads/{id}/update', 'update')->name('leads.update');
     Route::get('/leads', 'index')->name('leads.index');
     Route::get('/leads/get', 'get')->name('leads.get');
