@@ -22,6 +22,7 @@ export default {
     data: () => ({
         leads: [],
         success: '',
+        id: '',
         errors: '',
         countAllLeads: '',
         countLeadsInStatusNew: '',
@@ -68,6 +69,7 @@ export default {
             }
 
             if (resp.data.errors) {
+                this.id = resp.data.id;
                 this.errors = resp.data.errors;
             }
 
@@ -114,7 +116,9 @@ export default {
                                             @change="lead.isDisabled = false"
                                         />
 
-                                        <InputError class="mt-2" :message="this.errors.name" />
+                                        <div v-show="this.id === lead.id">
+                                            <InputError class="mt-2" :message="this.errors.name" />
+                                        </div>
                                     </div>
                                     <div class="mb-1">
                                         <InputLabel for="surname" value="Surname" />
@@ -129,7 +133,9 @@ export default {
                                             @change="lead.isDisabled = false"
                                         />
 
-                                        <InputError class="mt-2" :message="this.errors.surname" />
+                                        <div v-show="this.id === lead.id">
+                                            <InputError class="mt-2" :message="this.errors.surname" />
+                                        </div>
                                     </div>
                                     <div class="mb-1">
                                         <InputLabel for="email" value="Email" />
@@ -144,7 +150,9 @@ export default {
                                             @change="lead.isDisabled = false"
                                         />
 
-                                        <InputError class="mt-2" :message="this.errors.email" />
+                                        <div v-show="this.id === lead.id">
+                                            <InputError class="mt-2" :message="this.errors.email" />
+                                        </div>
                                     </div>
                                     <div class="mb-1">
                                         <InputLabel for="phone" value="Phone" />
@@ -159,7 +167,9 @@ export default {
                                             @change="lead.isDisabled = false"
                                         />
 
-                                        <InputError class="mt-2" :message="this.errors.phone" />
+                                        <div v-show="this.id === lead.id">
+                                            <InputError class="mt-2" :message="this.errors.phone" />
+                                        </div>
                                     </div>
                                     <div class="mb-1">
                                         <InputLabel for="created_at" value="Created at" />

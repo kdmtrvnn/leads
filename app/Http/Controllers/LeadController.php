@@ -89,7 +89,10 @@ class LeadController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return ['errors' =>  $validator->errors()];
+            return [
+                'id' => $id,
+                'errors' =>  $validator->errors(), 
+            ];
         }
 
         $this->leadRepositoryInterface->update($id, $request);
